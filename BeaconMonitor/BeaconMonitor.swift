@@ -42,8 +42,8 @@ public class BeaconMonitor: NSObject  {
     // CLLocationManager that will listen and react to Beacons.
     private var locationManager: CLLocationManager?
 
-    // Dictionary containing the CLBeaconRegions the locationManager is listening to. Each region is assigned to it's UUID as the key.
-    private var regions = [NSUUID: CLBeaconRegion]()
+    // Dictionary containing the CLBeaconRegions the locationManager is listening to. Each region is assigned to it's UUID String as the key.
+    private var regions = [String: CLBeaconRegion]()
     
     private var beaconsListening: [Beacon]?
     
@@ -58,7 +58,7 @@ public class BeaconMonitor: NSObject  {
     public init(uuid: NSUUID) {
         super.init()
         
-        regions[uuid] = self.regionForUUID(uuid)
+        regions[uuid.UUIDString] = self.regionForUUID(uuid)
     }
     
     /**
@@ -70,7 +70,7 @@ public class BeaconMonitor: NSObject  {
         super.init()
         
         for uuid in uuids {
-            regions[uuid] = self.regionForUUID(uuid)
+            regions[uuid.UUIDString] = self.regionForUUID(uuid)
         }
     }
     
@@ -88,7 +88,7 @@ public class BeaconMonitor: NSObject  {
         // create a CLBeaconRegion for each different UUID
         for uuid in distinctUnionOfUUIDs(beacons) {
             
-            regions[uuid] = self.regionForUUID(uuid)
+            regions[uuid.UUIDString] = self.regionForUUID(uuid)
         }
     }
     
@@ -103,7 +103,7 @@ public class BeaconMonitor: NSObject  {
         
         beaconsListening = [beacon]
         
-        regions[beacon.uuid] = self.regionForBeacon(beacon)
+        regions[beacon.uuid.UUIDString] = self.regionForBeacon(beacon)
     }
     
     
@@ -138,9 +138,9 @@ public class BeaconMonitor: NSObject  {
     - parameter uuid: UUID of the region to stop listening for
     */
     public func stopListening(uuid: NSUUID) {
-        if let region = regions[uuid] {
+        if let region = regions[uuid.UUIDString] {
             stopListening(region)
-            regions[uuid] = nil
+            regions[uuid.UUIDString] = nil
         }
     }
     
@@ -148,7 +148,7 @@ public class BeaconMonitor: NSObject  {
     // MARK: - Private Helper
     
     private func regionForUUID(uuid: NSUUID) -> CLBeaconRegion {
-        let region = CLBeaconRegion(proximityUUID: uuid, identifier: "\(regionIdentifier)-\(uuid)")
+        let region = CLBeaconRegion(proximityUUID: uuid, identifier: "\(regionIdentifier)-\(uuid.UUIDString)")
         region.notifyEntryStateOnDisplay = true
         return region
     }
@@ -157,7 +157,7 @@ public class BeaconMonitor: NSObject  {
         let region = CLBeaconRegion(proximityUUID: beacon.uuid,
                                     major: CLBeaconMajorValue(beacon.major.intValue),
                                     minor: CLBeaconMinorValue(beacon.minor.intValue),
-                                    identifier: "\(regionIdentifier)-\(beacon.uuid)")
+                                    identifier: "\(regionIdentifier)-\(beacon.uuid.UUIDString)")
         region.notifyEntryStateOnDisplay = true
         return region
     }
@@ -256,12 +256,12 @@ extension BeaconMonitor: CLLocationManagerDelegate {
     
     public func locationManager(manager: CLLocationManager, didEnterRegion region: CLRegion) {
         
-        print("Did Enter region")
+        print("Did Enter region \(region.identifier)")
     }
     
     public func locationManager(manager: CLLocationManager, didExitRegion region: CLRegion) {
         
-        print("Did Exit region")
+        print("Did Exit region \(region.identifier)")
     }
     
 }
