@@ -88,10 +88,22 @@ public class BeaconMonitor: NSObject  {
         // create a CLBeaconRegion for each different UUID
         for uuid in distinctUnionOfUUIDs(beacons) {
             
-            print(uuid)
-            
             regions[uuid] = self.regionForUUID(uuid)
         }
+    }
+    
+    /**
+     Init the BeaconMonitor and listen to the given Beacon.
+     From the Beacon values (uuid, major and minor) a concrete CLBeaconRegion will be created.
+     - parameter beacon: Beacon instance the BeaconMonitor is listening for and it will be used to create a concrete CLBeaconRegion.
+     - returns: Instance
+     */
+    public init(beacon: Beacon) {
+        super.init()
+        
+        beaconsListening = [beacon]
+        
+        regions[beacon.uuid] = self.regionForBeacon(beacon)
     }
     
     
@@ -105,6 +117,10 @@ public class BeaconMonitor: NSObject  {
         
         locationManager = CLLocationManager()
         locationManager!.delegate = self
+        
+        if CLLocationManager.authorizationStatus() == .NotDetermined {
+            locationManager!.requestAlwaysAuthorization()
+        }
     }
     
     /**
@@ -133,6 +149,15 @@ public class BeaconMonitor: NSObject  {
     
     private func regionForUUID(uuid: NSUUID) -> CLBeaconRegion {
         let region = CLBeaconRegion(proximityUUID: uuid, identifier: "\(regionIdentifier)-\(uuid)")
+        region.notifyEntryStateOnDisplay = true
+        return region
+    }
+    
+    private func regionForBeacon(beacon: Beacon) -> CLBeaconRegion {
+        let region = CLBeaconRegion(proximityUUID: beacon.uuid,
+                                    major: CLBeaconMajorValue(beacon.major.intValue),
+                                    minor: CLBeaconMinorValue(beacon.minor.intValue),
+                                    identifier: "\(regionIdentifier)-\(beacon.uuid)")
         region.notifyEntryStateOnDisplay = true
         return region
     }
