@@ -1,0 +1,5 @@
+language: objective-c
+osx_image: xcode7.3
+xcode_workspace: BeaconMonitor.xcworkspace
+xcode_scheme: BeaconMonitor
+xcode_sdk: iphonesimulator
