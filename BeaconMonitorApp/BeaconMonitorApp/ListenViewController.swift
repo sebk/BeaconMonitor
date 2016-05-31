@@ -15,20 +15,6 @@ class ListenViewController: UIViewController , UITextFieldDelegate {
     var monitor: BeaconMonitor?
     
     @IBOutlet weak var uuidTextfield: UITextField!
-    
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-
-        //let beacon = Beacon(uuid: NSUUID(UUIDString: "A1111111-B111-C111-D111-E11111111111")!, minor: 121, major: 3)
-        
-        //monitor = BeaconMonitor(beacons: [beacon])
-        
-        
-
-        
-    }
 
     @IBAction func switchChanged(sender: UISwitch) {
         

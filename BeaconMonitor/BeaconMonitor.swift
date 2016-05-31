@@ -29,12 +29,18 @@ http://www.scriptscoop.com/t/194508ceaf47/ios-detecting-beacons-via-ibeacon-moni
     
     optional func receivedMatchingBeacons(monitor: BeaconMonitor, beacons: [CLBeacon])
     
+    optional func didEnterRegion(region: CLRegion)
+    
+    optional func didExitRegion(region: CLRegion)
 }
 
 
 public class BeaconMonitor: NSObject  {
     
     public var delegate: BeaconMonitorDelegate?
+    
+    /// Define if the BeaconMonitorDelegate methods should also be called when the received list of beacons is empty.
+    public var reportWhenEmpty = false
     
     // Name that is used as the prefix for the region identifier.
     private let regionIdentifier = "BeaconMonitor"
@@ -202,11 +208,17 @@ extension BeaconMonitor: CLLocationManagerDelegate {
             }
         }
         
-        if matchingBeacons.count > 0 {
+        if reportWhenEmpty && matchingBeacons.isEmpty {
+            delegate?.receivedMatchingBeacons?(self, beacons: matchingBeacons)
+        }
+        else {
             delegate?.receivedMatchingBeacons?(self, beacons: matchingBeacons)
         }
         
-        if knownBeacons.count > 0 {
+        if reportWhenEmpty && knownBeacons.isEmpty {
+            delegate?.receivedAllBeacons?(self, beacons: knownBeacons)
+        }
+        else {
             delegate?.receivedAllBeacons?(self, beacons: knownBeacons)
         }
         
@@ -257,11 +269,15 @@ extension BeaconMonitor: CLLocationManagerDelegate {
     public func locationManager(manager: CLLocationManager, didEnterRegion region: CLRegion) {
         
         print("Did Enter region \(region.identifier)")
+        
+        delegate?.didEnterRegion?(region)
     }
     
     public func locationManager(manager: CLLocationManager, didExitRegion region: CLRegion) {
         
         print("Did Exit region \(region.identifier)")
+        
+        delegate?.didExitRegion?(region)
     }
     
 }
