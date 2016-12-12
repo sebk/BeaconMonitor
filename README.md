@@ -25,33 +25,38 @@ The BeaconMonitor class provides different init methods:
 
 	import BeaconMonitor
     import CoreLocation
-    
+
     class ListenViewController: UIViewController {
-        
+
         var monitor: BeaconMonitor?
-        
+
         override func viewDidLoad() {
         	super.viewDidLoad()
-        	
+
         	monitor = BeaconMonitor(uuid: NSUUID(UUIDString: uuidTextfield.text!)!)
         	monitor!.delegate = self
         	monitor!.startListening()
         }
     }
-    
+
     extension ListenViewController: BeaconMonitorDelegate {
-    
+
     	@objc func receivedAllBeacons(monitor: BeaconMonitor, beacons: [CLBeacon]) {
         	print("All Beacons: \(beacons)")
     	}
-    
+
     	@objc func receivedMatchingBeacons(monitor: BeaconMonitor, beacons: [CLBeacon]) {
         	print("Matching Beacons: \(beacons)")
     	}
-    
+
 	}
-	
+
 **Stop listening**:
 
 * `stopListening()`: Stop listening completly
 * `stopListening(uuid: NSUUID)`: Stop listening for a concrete UUID
+
+
+# Icon
+
+iBeacon icon in tableView by [icons8](https://icons8.com/web-app/13645/ibeacon)

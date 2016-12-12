@@ -22,19 +22,23 @@ Background vs Foreground:
 http://www.scriptscoop.com/t/194508ceaf47/ios-detecting-beacons-via-ibeacon-monitoring-ranging-vs-corebluetooth-scan.html
 */
 
-
+/// Implement this protocol to receive notifications.
 @objc public protocol BeaconMonitorDelegate {
     
+    /// Will be called every time the CLLocationManager receives CLBeacons.
     @objc optional func receivedAllBeacons(_ monitor: BeaconMonitor, beacons: [CLBeacon])
     
+    /// Will be called every time the CLLOcationManager receives CLBeacons, that matches to a set list of Beacons.
     @objc optional func receivedMatchingBeacons(_ monitor: BeaconMonitor, beacons: [CLBeacon])
     
+    /// Will be called when the CLLocationManager reports the "did enter region" event.
     @objc optional func didEnterRegion(_ region: CLRegion)
     
+    /// Will be called when the CLLocationManager reports the "did exit region" event.
     @objc optional func didExitRegion(_ region: CLRegion)
 }
 
-
+/// Class to receive CLBeacons and notify the delegate.
 open class BeaconMonitor: NSObject  {
     
     open var delegate: BeaconMonitorDelegate?
@@ -48,9 +52,12 @@ open class BeaconMonitor: NSObject  {
     // CLLocationManager that will listen and react to Beacons.
     fileprivate var locationManager: CLLocationManager?
 
-    // Dictionary containing the CLBeaconRegions the locationManager is listening to. Each region is assigned to it's UUID String as the key.
+    /* Dictionary containing the CLBeaconRegions the locationManager is listening to. Each region is assigned to it's UUID String as the key.
+        The String key in this dictionary is used as the unique key: This means, that each CLBeaconRegion will be unique by it's UUID.
+        A CLBeaconRegion is unique by it's 'identifier' and not it's UUID. When using this default unique key a dictionary would not be necessary. */
     fileprivate var regions = [String: CLBeaconRegion]()
     
+    // List of Beacons the monitor should listen on.
     fileprivate var beaconsListening: [Beacon]?
     
     
@@ -196,30 +203,33 @@ extension BeaconMonitor: CLLocationManagerDelegate {
     
     public func locationManager(_ manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], in region: CLBeaconRegion) {
         
-        let knownBeacons = beacons.filter{ $0.proximity != CLProximity.unknown }
+        let allBeacons = beacons.filter{ $0.proximity != CLProximity.unknown }
         
         // Filter received Beacons with the provided Beacon array
         var matchingBeacons = [CLBeacon]()
         if beaconsListening != nil {
-            for b in knownBeacons {
+            for b in allBeacons {
                 if beaconsListening!.contains(where: { $0.major == b.major && $0.minor == b.minor && $0.uuid as UUID == b.proximityUUID }) {
                     matchingBeacons.append(b)
                 }
             }
         }
         
+        
+        /* Call the delegate methods and provide the CLBeacon array */
+        
         if reportWhenEmpty && matchingBeacons.isEmpty {
             delegate?.receivedMatchingBeacons?(self, beacons: matchingBeacons)
         }
-        else {
+        else if !matchingBeacons.isEmpty {
             delegate?.receivedMatchingBeacons?(self, beacons: matchingBeacons)
         }
         
-        if reportWhenEmpty && knownBeacons.isEmpty {
-            delegate?.receivedAllBeacons?(self, beacons: knownBeacons)
+        if reportWhenEmpty && allBeacons.isEmpty {
+            delegate?.receivedAllBeacons?(self, beacons: allBeacons)
         }
-        else {
-            delegate?.receivedAllBeacons?(self, beacons: knownBeacons)
+        else if !allBeacons.isEmpty {
+            delegate?.receivedAllBeacons?(self, beacons: allBeacons)
         }
         
     }

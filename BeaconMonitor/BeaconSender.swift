@@ -10,12 +10,12 @@ import Foundation
 import CoreLocation
 import CoreBluetooth
 
-public class BeaconSender: NSObject, CBPeripheralManagerDelegate {
+public class BeaconSender: NSObject {
     
     public static let sharedInstance = BeaconSender()
     
     fileprivate var _region: CLBeaconRegion?
-    fileprivate var _peripheralManager: CBPeripheralManager?
+    fileprivate var _peripheralManager: CBPeripheralManager!
     
     fileprivate var _uuid = ""
     fileprivate var _identifier = ""
@@ -44,30 +44,35 @@ public class BeaconSender: NSObject, CBPeripheralManagerDelegate {
         _peripheralManager?.stopAdvertising()
     }
     
-    
-    // MARK: CBPeripheralManagerDelegate
+}
+
+//MARK: - CBPeripheralManagerDelegate
+
+extension BeaconSender: CBPeripheralManagerDelegate {
     
     public func peripheralManagerDidUpdateState(_ peripheral: CBPeripheralManager) {
         
         if peripheral.state == .poweredOn {
             
-            let dataToBeAdvertised:[String: Any] = [
-                CBAdvertisementDataLocalNameKey : _identifier as ImplicitlyUnwrappedOptional<AnyObject>,
-                CBAdvertisementDataManufacturerDataKey : _region!.peripheralData(withMeasuredPower: nil),
-                CBAdvertisementDataServiceUUIDsKey : [_uuid]
-            ]
+            let data = ((_region?.peripheralData(withMeasuredPower: nil))! as NSDictionary) as! Dictionary<String, Any>
+            peripheral.startAdvertising(data)
             
-            //let data = _region!.peripheralDataWithMeasuredPower(nil)
-            peripheral.startAdvertising(dataToBeAdvertised)
-            
-            print("Start advertising as Beacon")
+            print("Powered On -> start advertising")
         }
         else if peripheral.state == .poweredOff {
             
             peripheral.stopAdvertising()
             
-            print("Stop advertising as Beacon")
+            print("Powered Off -> stop advertising")
         }
     }
     
+    public func peripheralManagerDidStartAdvertising(_ peripheral: CBPeripheralManager, error: Error?) {
+        if error != nil {
+            print("Error starting advertising: \(error)")
+        }
+        else {
+            print("Did start advertising")
+        }
+    }
 }

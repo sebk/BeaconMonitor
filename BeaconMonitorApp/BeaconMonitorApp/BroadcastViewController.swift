@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import BeaconMonitor
 
+// ViewController that is used to enable iBeacon broadcasting (broadcast/transmit the decive as a iBeacon).
 class BroadcastViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var uuidTextField: UITextField!
