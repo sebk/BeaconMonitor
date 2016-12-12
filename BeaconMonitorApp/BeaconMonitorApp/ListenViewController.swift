@@ -16,13 +16,13 @@ class ListenViewController: UIViewController , UITextFieldDelegate {
     
     @IBOutlet weak var uuidTextfield: UITextField!
 
-    @IBAction func switchChanged(sender: UISwitch) {
+    @IBAction func switchChanged(_ sender: UISwitch) {
         
-        if sender.on {
+        if sender.isOn {
             
             if uuidTextfield.text != "" {
                 
-                monitor = BeaconMonitor(uuid: NSUUID(UUIDString: uuidTextfield.text!)!)
+                monitor = BeaconMonitor(uuid: UUID(uuidString: uuidTextfield.text!)!)
             }
             
             monitor!.delegate = self
@@ -35,7 +35,7 @@ class ListenViewController: UIViewController , UITextFieldDelegate {
 
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
@@ -45,12 +45,12 @@ class ListenViewController: UIViewController , UITextFieldDelegate {
 
 extension ListenViewController: BeaconMonitorDelegate {
     
-    @objc func receivedAllBeacons(monitor: BeaconMonitor, beacons: [CLBeacon]) {
+    @objc func receivedAllBeacons(_ monitor: BeaconMonitor, beacons: [CLBeacon]) {
         
         print("All Beacons: \(beacons)")
     }
     
-    @objc func receivedMatchingBeacons(monitor: BeaconMonitor, beacons: [CLBeacon]) {
+    @objc func receivedMatchingBeacons(_ monitor: BeaconMonitor, beacons: [CLBeacon]) {
         
         print("Matching Beacons: \(beacons)")
         

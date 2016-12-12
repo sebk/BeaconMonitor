@@ -14,14 +14,14 @@ public class BeaconSender: NSObject, CBPeripheralManagerDelegate {
     
     public static let sharedInstance = BeaconSender()
     
-    private var _region: CLBeaconRegion?
-    private var _peripheralManager: CBPeripheralManager?
+    fileprivate var _region: CLBeaconRegion?
+    fileprivate var _peripheralManager: CBPeripheralManager?
     
-    private var _uuid = ""
-    private var _identifier = ""
+    fileprivate var _uuid = ""
+    fileprivate var _identifier = ""
     
     
-    public func startSending(UUID uuid: String, majorID: CLBeaconMajorValue, minorID: CLBeaconMinorValue, identifier: String) {
+    public func startSending(uuid: String, majorID: CLBeaconMajorValue, minorID: CLBeaconMinorValue, identifier: String) {
         
         _uuid = uuid
         _identifier = identifier
@@ -30,7 +30,7 @@ public class BeaconSender: NSObject, CBPeripheralManagerDelegate {
         
         // create the region that will be used to send
         _region = CLBeaconRegion(
-            proximityUUID: NSUUID(UUIDString: uuid)!,
+            proximityUUID: UUID(uuidString: uuid)!,
             major: majorID,
             minor: minorID,
             identifier: identifier)
@@ -39,7 +39,7 @@ public class BeaconSender: NSObject, CBPeripheralManagerDelegate {
         
     }
     
-    public func stopSending() {
+    open func stopSending() {
         
         _peripheralManager?.stopAdvertising()
     }
@@ -47,14 +47,14 @@ public class BeaconSender: NSObject, CBPeripheralManagerDelegate {
     
     // MARK: CBPeripheralManagerDelegate
     
-    public func peripheralManagerDidUpdateState(peripheral: CBPeripheralManager) {
-
-        if peripheral.state == CBPeripheralManagerState.PoweredOn {
+    public func peripheralManagerDidUpdateState(_ peripheral: CBPeripheralManager) {
+        
+        if peripheral.state == .poweredOn {
             
-            let dataToBeAdvertised:[String: AnyObject!] = [
-                CBAdvertisementDataLocalNameKey : _identifier,
-                CBAdvertisementDataManufacturerDataKey : _region!.peripheralDataWithMeasuredPower(nil),
-                CBAdvertisementDataServiceUUIDsKey : [_uuid],
+            let dataToBeAdvertised:[String: Any] = [
+                CBAdvertisementDataLocalNameKey : _identifier as ImplicitlyUnwrappedOptional<AnyObject>,
+                CBAdvertisementDataManufacturerDataKey : _region!.peripheralData(withMeasuredPower: nil),
+                CBAdvertisementDataServiceUUIDsKey : [_uuid]
             ]
             
             //let data = _region!.peripheralDataWithMeasuredPower(nil)
@@ -62,13 +62,12 @@ public class BeaconSender: NSObject, CBPeripheralManagerDelegate {
             
             print("Start advertising as Beacon")
         }
-        else if peripheral.state == CBPeripheralManagerState.PoweredOff {
+        else if peripheral.state == .poweredOff {
             
             peripheral.stopAdvertising()
             
             print("Stop advertising as Beacon")
         }
-        
     }
     
 }

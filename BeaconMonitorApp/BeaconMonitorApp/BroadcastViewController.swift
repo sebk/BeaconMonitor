@@ -19,13 +19,13 @@ class BroadcastViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var minorTextField: UITextField!
     
     
-    @IBAction func switchChanged(sender: UISwitch) {
+    @IBAction func switchChanged(_ sender: UISwitch) {
         
-        if sender.on {
+        if sender.isOn {
             
             if uuidTextField.text != "" && majorTextField.text != "" && minorTextField.text != "" {
                 
-                BeaconSender.sharedInstance.startSending(UUID: uuidTextField.text!,
+                BeaconSender.sharedInstance.startSending(uuid: uuidTextField.text!,
                     majorID: UInt16(majorTextField.text!)!,
                     minorID: UInt16(minorTextField.text!)!,
                     identifier: "TEST")
@@ -40,7 +40,7 @@ class BroadcastViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
         textField.resignFirstResponder()
         

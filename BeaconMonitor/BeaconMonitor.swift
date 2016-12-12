@@ -25,33 +25,33 @@ http://www.scriptscoop.com/t/194508ceaf47/ios-detecting-beacons-via-ibeacon-moni
 
 @objc public protocol BeaconMonitorDelegate {
     
-    optional func receivedAllBeacons(monitor: BeaconMonitor, beacons: [CLBeacon])
+    @objc optional func receivedAllBeacons(_ monitor: BeaconMonitor, beacons: [CLBeacon])
     
-    optional func receivedMatchingBeacons(monitor: BeaconMonitor, beacons: [CLBeacon])
+    @objc optional func receivedMatchingBeacons(_ monitor: BeaconMonitor, beacons: [CLBeacon])
     
-    optional func didEnterRegion(region: CLRegion)
+    @objc optional func didEnterRegion(_ region: CLRegion)
     
-    optional func didExitRegion(region: CLRegion)
+    @objc optional func didExitRegion(_ region: CLRegion)
 }
 
 
-public class BeaconMonitor: NSObject  {
+open class BeaconMonitor: NSObject  {
     
-    public var delegate: BeaconMonitorDelegate?
+    open var delegate: BeaconMonitorDelegate?
     
     /// Define if the BeaconMonitorDelegate methods should also be called when the received list of beacons is empty.
-    public var reportWhenEmpty = false
+    open var reportWhenEmpty = false
     
     // Name that is used as the prefix for the region identifier.
-    private let regionIdentifier = "BeaconMonitor"
+    fileprivate let regionIdentifier = "BeaconMonitor"
     
     // CLLocationManager that will listen and react to Beacons.
-    private var locationManager: CLLocationManager?
+    fileprivate var locationManager: CLLocationManager?
 
     // Dictionary containing the CLBeaconRegions the locationManager is listening to. Each region is assigned to it's UUID String as the key.
-    private var regions = [String: CLBeaconRegion]()
+    fileprivate var regions = [String: CLBeaconRegion]()
     
-    private var beaconsListening: [Beacon]?
+    fileprivate var beaconsListening: [Beacon]?
     
     
     // MARK: - Init methods
@@ -61,10 +61,10 @@ public class BeaconMonitor: NSObject  {
     - parameter uuid: NSUUID for the region the locationManager is listening to.
     - returns: Instance
     */
-    public init(uuid: NSUUID) {
+    public init(uuid: UUID) {
         super.init()
         
-        regions[uuid.UUIDString] = self.regionForUUID(uuid)
+        regions[uuid.uuidString] = self.regionForUUID(uuid)
     }
     
     /**
@@ -72,11 +72,11 @@ public class BeaconMonitor: NSObject  {
     - parameter uuids: Array of UUIDs for the regions the locationManager should listen to.
     - returns: Instance
     */
-    public init(uuids: [NSUUID]) {
+    public init(uuids: [UUID]) {
         super.init()
         
         for uuid in uuids {
-            regions[uuid.UUIDString] = self.regionForUUID(uuid)
+            regions[uuid.uuidString] = self.regionForUUID(uuid)
         }
     }
     
@@ -94,7 +94,7 @@ public class BeaconMonitor: NSObject  {
         // create a CLBeaconRegion for each different UUID
         for uuid in distinctUnionOfUUIDs(beacons) {
             
-            regions[uuid.UUIDString] = self.regionForUUID(uuid)
+            regions[uuid.uuidString] = self.regionForUUID(uuid)
         }
     }
     
@@ -109,7 +109,7 @@ public class BeaconMonitor: NSObject  {
         
         beaconsListening = [beacon]
         
-        regions[beacon.uuid.UUIDString] = self.regionForBeacon(beacon)
+        regions[beacon.uuid.uuidString] = self.regionForBeacon(beacon)
     }
     
     
@@ -119,12 +119,12 @@ public class BeaconMonitor: NSObject  {
     Start listening for Beacons.
     The settings are used from the init mthod.
     */
-    public func startListening() {
+    open func startListening() {
         
         locationManager = CLLocationManager()
         locationManager!.delegate = self
         
-        if CLLocationManager.authorizationStatus() == .NotDetermined {
+        if CLLocationManager.authorizationStatus() == .notDetermined {
             locationManager!.requestAlwaysAuthorization()
         }
     }
@@ -132,7 +132,7 @@ public class BeaconMonitor: NSObject  {
     /**
     Stop listening for all regions.
     */
-    public func stopListening() {
+    open func stopListening() {
         for (uuid, region) in regions {
             stopListening(region)
             regions[uuid] = nil
@@ -143,48 +143,48 @@ public class BeaconMonitor: NSObject  {
     Stop listening only for the region with the given UUID.
     - parameter uuid: UUID of the region to stop listening for
     */
-    public func stopListening(uuid: NSUUID) {
-        if let region = regions[uuid.UUIDString] {
+    open func stopListening(_ uuid: UUID) {
+        if let region = regions[uuid.uuidString] {
             stopListening(region)
-            regions[uuid.UUIDString] = nil
+            regions[uuid.uuidString] = nil
         }
     }
     
     
     // MARK: - Private Helper
     
-    private func regionForUUID(uuid: NSUUID) -> CLBeaconRegion {
-        let region = CLBeaconRegion(proximityUUID: uuid, identifier: "\(regionIdentifier)-\(uuid.UUIDString)")
+    fileprivate func regionForUUID(_ uuid: UUID) -> CLBeaconRegion {
+        let region = CLBeaconRegion(proximityUUID: uuid, identifier: "\(regionIdentifier)-\(uuid.uuidString)")
         region.notifyEntryStateOnDisplay = true
         return region
     }
     
-    private func regionForBeacon(beacon: Beacon) -> CLBeaconRegion {
-        let region = CLBeaconRegion(proximityUUID: beacon.uuid,
-                                    major: CLBeaconMajorValue(beacon.major.intValue),
-                                    minor: CLBeaconMinorValue(beacon.minor.intValue),
-                                    identifier: "\(regionIdentifier)-\(beacon.uuid.UUIDString)")
+    fileprivate func regionForBeacon(_ beacon: Beacon) -> CLBeaconRegion {
+        let region = CLBeaconRegion(proximityUUID: beacon.uuid as UUID,
+                                    major: CLBeaconMajorValue(beacon.major.int32Value),
+                                    minor: CLBeaconMinorValue(beacon.minor.int32Value),
+                                    identifier: "\(regionIdentifier)-\(beacon.uuid.uuidString)")
         region.notifyEntryStateOnDisplay = true
         return region
     }
     
-    private func stopListening(region: CLBeaconRegion) {
-        locationManager?.stopRangingBeaconsInRegion(region)
-        locationManager?.stopMonitoringForRegion(region)
+    fileprivate func stopListening(_ region: CLBeaconRegion) {
+        locationManager?.stopRangingBeacons(in: region)
+        locationManager?.stopMonitoring(for: region)
     }
     
     // http://stackoverflow.com/a/26358719/470964
-    private func distinctUnionOfUUIDs(beacons: [Beacon]) -> [NSUUID] {
-        var dict = [NSUUID : Bool]()
+    fileprivate func distinctUnionOfUUIDs(_ beacons: [Beacon]) -> [UUID] {
+        var dict = [UUID : Bool]()
         let filtered = beacons.filter { (element: Beacon) -> Bool in
-            if dict[element.uuid] == nil {
-                dict[element.uuid] = true
+            if dict[element.uuid as UUID] == nil {
+                dict[element.uuid as UUID] = true
                 return true
             }
             return false
         }
         
-        return filtered.map { $0.uuid}
+        return filtered.map { ($0.uuid as UUID)}
     }
     
 }
@@ -194,15 +194,15 @@ public class BeaconMonitor: NSObject  {
 
 extension BeaconMonitor: CLLocationManagerDelegate {
     
-    public func locationManager(manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], inRegion region: CLBeaconRegion) {
+    public func locationManager(_ manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], in region: CLBeaconRegion) {
         
-        let knownBeacons = beacons.filter{ $0.proximity != CLProximity.Unknown }
+        let knownBeacons = beacons.filter{ $0.proximity != CLProximity.unknown }
         
         // Filter received Beacons with the provided Beacon array
         var matchingBeacons = [CLBeacon]()
         if beaconsListening != nil {
             for b in knownBeacons {
-                if beaconsListening!.contains({ $0.major == b.major && $0.minor == b.minor && $0.uuid == b.proximityUUID }) {
+                if beaconsListening!.contains(where: { $0.major == b.major && $0.minor == b.minor && $0.uuid as UUID == b.proximityUUID }) {
                     matchingBeacons.append(b)
                 }
             }
@@ -224,56 +224,56 @@ extension BeaconMonitor: CLLocationManagerDelegate {
         
     }
     
-    public func locationManager(manager: CLLocationManager, didStartMonitoringForRegion region: CLRegion) {
+    public func locationManager(_ manager: CLLocationManager, didStartMonitoringFor region: CLRegion) {
         
         print("did start monitoring")
         
-        manager.requestStateForRegion(region)
+        manager.requestState(for: region)
     }
     
-    public func locationManager(manager: CLLocationManager, didDetermineState state: CLRegionState, forRegion region: CLRegion) {
+    public func locationManager(_ manager: CLLocationManager, didDetermineState state: CLRegionState, for region: CLRegion) {
         
         print("Did determine state")
         
-        if (state == .Inside) {
-            manager.startRangingBeaconsInRegion(region as! CLBeaconRegion)
+        if (state == .inside) {
+            manager.startRangingBeacons(in: region as! CLBeaconRegion)
         }
         else {
-            manager.stopRangingBeaconsInRegion(region as! CLBeaconRegion)
+            manager.stopRangingBeacons(in: region as! CLBeaconRegion)
         }
     }
     
     // When is this method called? -> http://stackoverflow.com/a/30107511/470964
-    public func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+    public func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
 
         switch status {
-        case .NotDetermined:
+        case .notDetermined:
             manager.requestAlwaysAuthorization()
 
-        case .AuthorizedWhenInUse, .AuthorizedAlways:
+        case .authorizedWhenInUse, .authorizedAlways:
            
             for (_, region) in regions {
                 print("start monitoring")
-                manager.startMonitoringForRegion(region)
+                manager.startMonitoring(for: region)
             }
             
-        case .Restricted:
+        case .restricted:
             // restricted by e.g. parental controls. User can't enable Location Services
             break
-        case .Denied:
+        case .denied:
             // user denied your app access to Location Services, but can grant access from Settings.app
             break
         }
     }
     
-    public func locationManager(manager: CLLocationManager, didEnterRegion region: CLRegion) {
+    public func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
         
         print("Did Enter region \(region.identifier)")
         
         delegate?.didEnterRegion?(region)
     }
     
-    public func locationManager(manager: CLLocationManager, didExitRegion region: CLRegion) {
+    public func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
         
         print("Did Exit region \(region.identifier)")
         

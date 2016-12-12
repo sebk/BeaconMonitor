@@ -7,14 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9608B8FB1BAE77AD00F127EB /* BroadcastViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9608B8FA1BAE77AD00F127EB /* BroadcastViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		9608B8FB1BAE77AD00F127EB /* BroadcastViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9608B8FA1BAE77AD00F127EB /* BroadcastViewController.swift */; };
+		965189B21DFEA8BA00D76DAB /* BeaconMonitor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 965189B11DFEA8BA00D76DAB /* BeaconMonitor.framework */; };
+		965189B31DFEA8BA00D76DAB /* BeaconMonitor.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 965189B11DFEA8BA00D76DAB /* BeaconMonitor.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		969428F51BA9E61A00C46091 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969428F41BA9E61A00C46091 /* AppDelegate.swift */; };
 		969428F71BA9E61A00C46091 /* ListenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969428F61BA9E61A00C46091 /* ListenViewController.swift */; };
 		969428FA1BA9E61A00C46091 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 969428F81BA9E61A00C46091 /* Main.storyboard */; };
 		969428FC1BA9E61A00C46091 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 969428FB1BA9E61A00C46091 /* Assets.xcassets */; };
 		969428FF1BA9E61A00C46091 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 969428FD1BA9E61A00C46091 /* LaunchScreen.storyboard */; };
-		969429081BA9E81C00C46091 /* BeaconMonitor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 969429071BA9E81C00C46091 /* BeaconMonitor.framework */; };
-		969429091BA9E81C00C46091 /* BeaconMonitor.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 969429071BA9E81C00C46091 /* BeaconMonitor.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -24,7 +24,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				969429091BA9E81C00C46091 /* BeaconMonitor.framework in Embed Frameworks */,
+				965189B31DFEA8BA00D76DAB /* BeaconMonitor.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -33,6 +33,7 @@
 
 /* Begin PBXFileReference section */
 		9608B8FA1BAE77AD00F127EB /* BroadcastViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BroadcastViewController.swift; sourceTree = "<group>"; };
+		965189B11DFEA8BA00D76DAB /* BeaconMonitor.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BeaconMonitor.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		969428F11BA9E61A00C46091 /* BeaconMonitorApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BeaconMonitorApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		969428F41BA9E61A00C46091 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		969428F61BA9E61A00C46091 /* ListenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListenViewController.swift; sourceTree = "<group>"; };
@@ -40,7 +41,6 @@
 		969428FB1BA9E61A00C46091 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		969428FE1BA9E61A00C46091 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		969429001BA9E61A00C46091 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		969429071BA9E81C00C46091 /* BeaconMonitor.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = BeaconMonitor.framework; path = "/Users/seb/Library/Developer/Xcode/DerivedData/BeaconMonitor-ejlwdhsaunebdlcaxavmqlhsdlmp/Build/Products/Debug-iphoneos/BeaconMonitor.framework"; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,7 +48,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				969429081BA9E81C00C46091 /* BeaconMonitor.framework in Frameworks */,
+				965189B21DFEA8BA00D76DAB /* BeaconMonitor.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -58,7 +58,7 @@
 		969428E81BA9E61A00C46091 = {
 			isa = PBXGroup;
 			children = (
-				969429071BA9E81C00C46091 /* BeaconMonitor.framework */,
+				965189B11DFEA8BA00D76DAB /* BeaconMonitor.framework */,
 				969428F31BA9E61A00C46091 /* BeaconMonitorApp */,
 				969428F21BA9E61A00C46091 /* Products */,
 			);
@@ -113,11 +113,13 @@
 		969428E91BA9E61A00C46091 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = seb;
 				TargetAttributes = {
 					969428F01BA9E61A00C46091 = {
 						CreatedOnToolsVersion = 7.0;
+						DevelopmentTeam = LHEB98WL67;
+						LastSwiftMigration = 0820;
 					};
 				};
 			};
@@ -198,8 +200,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -243,8 +247,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -263,6 +269,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -272,10 +279,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = LHEB98WL67;
 				INFOPLIST_FILE = BeaconMonitorApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = seb.dev.BeaconMonitorApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -283,10 +292,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = LHEB98WL67;
 				INFOPLIST_FILE = BeaconMonitorApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = seb.dev.BeaconMonitorApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
