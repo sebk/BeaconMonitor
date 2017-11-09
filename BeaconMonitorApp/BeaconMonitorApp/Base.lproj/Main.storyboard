@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11761" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="wEh-57-sS2">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="wEh-57-sS2">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -82,6 +82,8 @@
                             <constraint firstItem="u3y-qc-Kwy" firstAttribute="leading" secondItem="mZn-UA-mO5" secondAttribute="leading" id="23L-Kh-lGd"/>
                             <constraint firstItem="mZn-UA-mO5" firstAttribute="trailing" secondItem="Ay6-0j-kkV" secondAttribute="trailingMargin" id="2m0-BJ-k1r"/>
                             <constraint firstItem="VlA-TK-BHR" firstAttribute="leading" secondItem="dN2-P5-jVK" secondAttribute="leading" id="40h-nK-RqM"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="51S-bY-rb6" secondAttribute="trailingMargin" id="4nh-eB-pHd"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="VlA-TK-BHR" secondAttribute="trailing" constant="20" symbolic="YES" id="I4W-Ta-XHe"/>
                             <constraint firstItem="lcc-ug-KDe" firstAttribute="centerY" secondItem="emA-Nb-jsG" secondAttribute="centerY" id="KMG-Hh-VPO"/>
                             <constraint firstItem="u3y-qc-Kwy" firstAttribute="centerY" secondItem="VlA-TK-BHR" secondAttribute="centerY" id="U9x-kw-IT6"/>
                             <constraint firstItem="mZn-UA-mO5" firstAttribute="leading" secondItem="dN2-P5-jVK" secondAttribute="trailing" constant="26" id="ULT-E4-HGx"/>
@@ -90,6 +92,7 @@
                             <constraint firstItem="dN2-P5-jVK" firstAttribute="top" secondItem="51S-bY-rb6" secondAttribute="bottom" constant="21" id="gjY-EW-mKv"/>
                             <constraint firstItem="emA-Nb-jsG" firstAttribute="top" secondItem="VlA-TK-BHR" secondAttribute="bottom" constant="17" id="gtw-Cn-n83"/>
                             <constraint firstItem="mZn-UA-mO5" firstAttribute="centerY" secondItem="dN2-P5-jVK" secondAttribute="centerY" id="mfU-vb-Ks4"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="emA-Nb-jsG" secondAttribute="trailing" constant="20" symbolic="YES" id="nsm-xN-4Tt"/>
                             <constraint firstItem="emA-Nb-jsG" firstAttribute="leading" secondItem="VlA-TK-BHR" secondAttribute="leading" id="qiM-fl-E9V"/>
                             <constraint firstItem="9Y0-8l-W9K" firstAttribute="trailing" secondItem="Ay6-0j-kkV" secondAttribute="trailingMargin" id="sdN-L7-bRU"/>
                             <constraint firstItem="51S-bY-rb6" firstAttribute="top" secondItem="KdR-sW-4MR" secondAttribute="bottom" constant="8" id="u1p-Wz-LMr"/>
@@ -131,14 +134,11 @@
                             </switch>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="UUID" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RVe-0G-bec">
                                 <rect key="frame" x="20" y="75" width="41" height="22"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="41" id="dsi-yY-7m0"/>
-                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="9587F7BC-8039-485D-AA08-A5B093BABF5A" borderStyle="roundedRect" textAlignment="right" minimumFontSize="12" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="rmq-ov-a32">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="9587F7BC-8039-485D-AA08-A5B093BABF5A" borderStyle="roundedRect" textAlignment="right" minimumFontSize="12" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="rmq-ov-a32">
                                 <rect key="frame" x="69" y="71" width="286" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -174,6 +174,7 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="C6a-MX-y3g" firstAttribute="top" secondItem="RVe-0G-bec" secondAttribute="bottom" constant="12" id="4qg-3H-VxJ"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Awd-oa-p3A" secondAttribute="trailing" constant="20" symbolic="YES" id="6ea-1s-Knr"/>
                             <constraint firstItem="Awd-oa-p3A" firstAttribute="leading" secondItem="8fi-Si-VkX" secondAttribute="leadingMargin" constant="4" id="D91-72-V1H"/>
                             <constraint firstItem="Xig-Qk-5x5" firstAttribute="top" secondItem="K18-jK-PAL" secondAttribute="bottom" constant="8" symbolic="YES" id="E9A-vG-sh0"/>
                             <constraint firstItem="Oqa-RD-Qys" firstAttribute="top" secondItem="C6a-MX-y3g" secondAttribute="bottom" constant="8" symbolic="YES" id="FHJ-Jp-G34"/>

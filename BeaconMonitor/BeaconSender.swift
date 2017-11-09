@@ -68,7 +68,7 @@ extension BeaconSender: CBPeripheralManagerDelegate {
     }
     
     public func peripheralManagerDidStartAdvertising(_ peripheral: CBPeripheralManager, error: Error?) {
-        if error != nil {
+        if let error = error {
             print("Error starting advertising: \(error)")
         }
         else {
