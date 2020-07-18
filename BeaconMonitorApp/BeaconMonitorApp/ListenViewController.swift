@@ -21,16 +21,18 @@ class ListenViewController: UIViewController , UITextFieldDelegate {
         case allBeaconsSelection = 0
         case knownBeaconsSelection = 1
     }
+    
     // Holds the current selected UISegmentedControl enum definition.
     private var selectedList = SegmentControlSelection.allBeaconsSelection
     
-    // Holds are currently received CLBeacons.
+    // Holds the current received CLBeacons.
     fileprivate var allBeacons: [CLBeacon]? {
         didSet {
             self.tableView.reloadData() //simple, only for demo; In a real App this should be handled better.
         }
     }
-    // Holds are currently received CLBeacons, that matches defined Beacons.
+    
+    // Holds the current received CLBeacons, that matches defined Beacons.
     fileprivate var knownBeacons: [CLBeacon]? {
         didSet {
             self.tableView.reloadData() //simple, only for demo; In a real App this should be handled better.

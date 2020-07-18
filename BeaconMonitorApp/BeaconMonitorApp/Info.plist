@@ -25,7 +25,11 @@
 	<key>NSBluetoothPeripheralUsageDescription</key>
 	<string>Advertise device as an iBeacon</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string></string>
+	<string>Needed for beacon location tracking</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Needed for beacon location tracking</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Needed for beacon location tracking</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>bluetooth-peripheral</string>

@@ -273,6 +273,8 @@ extension BeaconMonitor: CLLocationManagerDelegate {
         case .denied:
             // user denied your app access to Location Services, but can grant access from Settings.app
             break
+        @unknown default:
+            break
         }
     }
     
